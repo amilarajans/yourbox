@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost/yourbox?characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: admin
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      idle-timeout: 30000
+      connection-test-query: SELECT 1
+      pool-name: OriginsPool
+      maximum-pool-size: 100
+
+  session:
+    store-type: hazelcast
+
+  cache:
+    type: hazelcast
+
+mybatis:
+  typeAliasesPackage: com.origins.domain
+  mapperLocations: classpath:mappers/*.xml
+
+flyway:
+  baseline-on-migrate: true
+  table: SCHEMA_VERSION
