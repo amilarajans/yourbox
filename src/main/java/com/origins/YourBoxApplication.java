@@ -10,10 +10,13 @@
 
 package com.origins;
 
+import com.origins.configuration.OriginsProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
+@EnableConfigurationProperties({OriginsProperties.class})
 public class YourBoxApplication {
 
     public static void main(String[] args) {

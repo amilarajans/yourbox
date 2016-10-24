@@ -1,26 +1,70 @@
 spring:
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost/yourbox?characterEncoding=UTF-8&useSSL=false
-    username: root
-    password: admin
-    driver-class-name: com.mysql.jdbc.Driver
-    hikari:
-      idle-timeout: 30000
-      connection-test-query: SELECT 1
-      pool-name: OriginsPool
-      maximum-pool-size: 100
+    profiles:
+        active: dev
+    datasource:
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:mysql://localhost/yourbox?characterEncoding=UTF-8&useSSL=false
+        username: root
+        password: admin
+        driver-class-name: com.mysql.jdbc.Driver
+        hikari:
+            idle-timeout: 30000
+            connection-test-query: SELECT 1
+            pool-name: OriginsPool
+            maximum-pool-size: 100
 
-  session:
-    store-type: hazelcast
+    session:
+        store-type: hazelcast
 
-  cache:
-    type: hazelcast
+    cache:
+        type: hazelcast
+
+    mail:
+        host: localhost
+        port: 25
+        username:
+        password:
+
+    jackson:
+        serialization.indent_output: true
 
 mybatis:
-  typeAliasesPackage: com.origins.domain
-  mapperLocations: classpath:mappers/*.xml
+    typeAliasesPackage: com.origins.domain
+    mapperLocations: classpath:mappers/*.xml
 
 flyway:
-  baseline-on-migrate: true
-  table: SCHEMA_VERSION
+    baseline-on-migrate: true
+    table: SCHEMA_VERSION
+
+security:
+    user:
+        password: admin
+        name: admin
+
+origins:
+    security:
+        rememberMe:
+            # security key (this key should be unique for your application, and kept secret)
+            key: f0186c13d2417f4fa9532017dc5e02300d6c232d
+    mail:
+        from: noreply@yourbox.com
+    metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
+        jmx.enabled: true
+        spark:
+            enabled: false
+            host: localhost
+            port: 9999
+        graphite:
+            enabled: false
+            host: localhost
+            port: 2003
+            prefix: jhipsterHazelcastSampleApplication
+        logs: # Reports Dropwizard metrics in the logs
+            enabled: false
+            reportFrequency: 60 # in seconds
+    logging:
+        logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
+            enabled: false
+            host: localhost
+            port: 5000
+            queueSize: 512

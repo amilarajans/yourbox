@@ -17,6 +17,8 @@ import com.hazelcast.core.HazelcastInstance;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.session.hazelcast.config.annotation.web.http.EnableHazelcastHttpSession;
 
 
@@ -54,5 +56,10 @@ public class HazelcastConfig {
     @Bean
     public HazelcastInstance embeddedHazelcast(Config hazelcastConfig) {
         return Hazelcast.newHazelcastInstance(hazelcastConfig);
+    }
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
     }
 }
