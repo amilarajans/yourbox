@@ -7,8 +7,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-// Generated on 2016-10-11 using generator-jhipster 3.9.1
 'use strict';
 
 var gulp = require('gulp'),
@@ -98,7 +96,7 @@ gulp.task('html', function () {
     return gulp.src(config.app + 'app/**/*.html')
         .pipe(htmlmin({collapseWhitespace: true}))
         .pipe(templateCache({
-            module: 'jhipsterHazelcastSampleApplicationApp',
+            module: 'YourBox',
             root: 'app/',
             moduleSystem: 'IIFE'
         }))
@@ -121,7 +119,7 @@ gulp.task('ngconstant:dev', function () {
 
 gulp.task('ngconstant:prod', function () {
     return ngConstant({
-        name: 'jhipsterHazelcastSampleApplicationApp',
+        name: 'YourBox',
         constants: {
             VERSION: util.parseVersion(),
             DEBUG_INFO_ENABLED: false

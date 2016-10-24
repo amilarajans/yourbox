@@ -2,6 +2,3 @@ machine:
   java:
     version: oraclejdk8
 
-test:
-  override:
-    - echo "test"

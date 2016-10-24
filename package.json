@@ -1,7 +1,7 @@
 {
   "name": "YourBox",
   "version": "0.0.0",
-  "description": "Description for jhipsterHazelcastSampleApplication",
+  "description": "YourBox Application",
   "private": true,
   "cacheDirectories": [
     "node_modules",
@@ -14,7 +14,6 @@
     "eslint-config-angular": "0.5.0",
     "eslint-plugin-angular": "1.3.1",
     "event-stream": "3.3.4",
-    "generator-jhipster": "3.9.1",
     "gulp": "3.9.1",
     "gulp-angular-filesort": "1.1.1",
     "gulp-angular-templatecache": "2.0.0",
