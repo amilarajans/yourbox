@@ -184,7 +184,7 @@ public class UserService {
 
     public void deleteUser(String login) {
         userRepository.findOneByLogin(login).ifPresent(u -> {
-            userRepository.delete(u);
+            userRepository.delete(u.getId());
             log.debug("Deleted User: {}", u);
         });
     }
@@ -238,7 +238,7 @@ public class UserService {
             log.debug("Deleting token {}", token.getSeries());
             User user = token.getUser();
             user.getPersistentTokens().remove(token);
-            persistentTokenRepository.delete(token);
+            persistentTokenRepository.deleteByTokenValue(token.getTokenValue());
         });
     }
 
@@ -254,7 +254,7 @@ public class UserService {
         List<User> users = userRepository.findAllByActivatedIsFalseAndCreatedDateBefore(now.minusDays(3));
         for (User user : users) {
             log.debug("Deleting not activated user {}", user.getLogin());
-            userRepository.delete(user);
+            userRepository.delete(user.getId());
         }
     }
 }

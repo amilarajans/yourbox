@@ -11,12 +11,7 @@
 package com.origins.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.origins.enums.Constants;
-import org.hibernate.validator.constraints.Email;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -32,37 +27,24 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     private Long id;
 
-    @NotNull
-    @Pattern(regexp = Constants.LOGIN_REGEX)
-    @Size(min = 1, max = 50)
     private String login;
 
     @JsonIgnore
-    @NotNull
-    @Size(min = 60, max = 60)
     private String password;
 
-    @Size(max = 50)
     private String firstName;
 
-    @Size(max = 50)
     private String lastName;
 
-    @Email
-    @Size(max = 100)
     private String email;
 
-    @NotNull
     private boolean activated = false;
 
-    @Size(min = 2, max = 5)
     private String langKey;
 
-    @Size(max = 20)
     @JsonIgnore
     private String activationKey;
 
-    @Size(max = 20)
     private String resetKey;
 
     private ZonedDateTime resetDate = null;

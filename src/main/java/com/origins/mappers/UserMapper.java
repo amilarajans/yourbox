@@ -38,7 +38,7 @@ public interface UserMapper {
 //            countQuery = "select count(user) from User user")
     List<User> findAllWithAuthorities();
 
-    void delete(User user);
+    void delete(Long userId);
 
     void save(User user);
 

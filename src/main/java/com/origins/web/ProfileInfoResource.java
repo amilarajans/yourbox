@@ -10,12 +10,12 @@
 
 package com.origins.web;
 
-import com.origins.utils.DefaultProfileUtil;
 import com.origins.configuration.OriginsProperties;
+import com.origins.utils.DefaultProfileUtil;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
@@ -33,9 +33,7 @@ public class ProfileInfoResource {
     @Inject
     private OriginsProperties originsProperties;
 
-    @RequestMapping(value = "/profile-info",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/profile-info", produces = MediaType.APPLICATION_JSON_VALUE)
     public ProfileInfoResponse getActiveProfiles() {
         return new ProfileInfoResponse(DefaultProfileUtil.getActiveProfiles(env), getRibbonEnv());
     }

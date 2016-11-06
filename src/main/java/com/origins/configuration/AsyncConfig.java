@@ -43,7 +43,7 @@ public class AsyncConfig implements AsyncConfigurer {
         executor.setCorePoolSize(originsProperties.getAsync().getCorePoolSize());
         executor.setMaxPoolSize(originsProperties.getAsync().getMaxPoolSize());
         executor.setQueueCapacity(originsProperties.getAsync().getQueueCapacity());
-        executor.setThreadNamePrefix("jhipster-hazelcast-sample-application-Executor-");
+        executor.setThreadNamePrefix("Origins-Executor-");
         return new ExceptionHandlingAsyncTaskExecutor(executor);
     }
 

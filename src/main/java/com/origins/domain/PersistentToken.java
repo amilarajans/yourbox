@@ -12,8 +12,6 @@ package com.origins.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -31,13 +29,11 @@ public class PersistentToken implements Serializable {
     private String series;
 
     @JsonIgnore
-    @NotNull
     private String tokenValue;
 
     private LocalDate tokenDate;
 
     //an IPV6 address max length is 39 characters
-    @Size(min = 0, max = 39)
     private String ipAddress;
 
     private String userAgent;

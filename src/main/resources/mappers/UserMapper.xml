@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.origins.mappers.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.origins.domain.User">
+        <id column="ID_" jdbcType="BIGINT" property="id"/>
+        <result column="LOGIN_" jdbcType="VARCHAR" property="login"/>
+        <result column="PASSWORD_HASH_" jdbcType="VARCHAR" property="passwordHash"/>
+        <result column="FIRST_NAME_" jdbcType="VARCHAR" property="firstName"/>
+        <result column="LAST_NAME_" jdbcType="VARCHAR" property="lastName"/>
+        <result column="EMAIL_" jdbcType="VARCHAR" property="email"/>
+        <result column="ACTIVATED_" jdbcType="BIT" property="activated"/>
+        <result column="LANG_KEY_" jdbcType="VARCHAR" property="langKey"/>
+        <result column="ACTIVATION_KEY_" jdbcType="VARCHAR" property="activationKey"/>
+        <result column="RESET_KEY_" jdbcType="VARCHAR" property="resetKey"/>
+        <result column="CREATED_BY_" jdbcType="VARCHAR" property="createdBy"/>
+        <result column="CREATED_DATE_" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="RESET_DATE_" jdbcType="TIMESTAMP" property="resetDate"/>
+        <result column="LAST_MODIFIED_BY_" jdbcType="VARCHAR" property="lastModifiedBy"/>
+        <result column="LAST_MODIFIED_DATE_" jdbcType="TIMESTAMP" property="lastModifiedDate"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID_, LOGIN_, PASSWORD_HASH_, FIRST_NAME_, LAST_NAME_, EMAIL_, ACTIVATED_, LANG_KEY_, ACTIVATION_KEY_,
+        RESET_KEY_, CREATED_BY_, CREATED_DATE_, RESET_DATE_, LAST_MODIFIED_BY_, LAST_MODIFIED_DATE_
+    </sql>
+
+    <select id="findOneByActivationKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ORI_USER
+        WHERE ACTIVATION_KEY_ = #{activationKey,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findOneByResetKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ORI_USER
+        WHERE RESET_KEY_ = #{resetKey,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findOneByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ORI_USER
+        WHERE EMAIL_ = #{email,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findOneByLogin" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ORI_USER
+        WHERE LOGIN_ = #{login,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findOneById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ORI_USER
+        WHERE ID_ = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findOne" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ORI_USER
+        WHERE ID_ = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findAllByActivatedIsFalseAndCreatedDateBefore" parameterType="java.lang.String"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ORI_USER
+        WHERE ACTIVATED_ = FALSE AND CREATED_DATE_ = #{createdDate,jdbcType=TIMESTAMP}
+    </select>
+
+    <select id="findAllWithAuthorities" resultMap="BaseResultMap">
+        SELECT DISTINCT
+            u.*
+        FROM
+            ORI_USER u
+        LEFT JOIN ORI_USER_AUTHORITY ua ON u.ID_ = ua.USER_ID_
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM ORI_USER
+        WHERE ID = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="save" parameterType="com.origins.domain.User">
+        INSERT INTO ORI_USER (ID_, LOGIN_, PASSWORD_HASH_,
+          FIRST_NAME_, LAST_NAME_, EMAIL_,
+          ACTIVATED_, LANG_KEY_, ACTIVATION_KEY_,
+          RESET_KEY_, CREATED_BY_, CREATED_DATE_,
+          RESET_DATE_, LAST_MODIFIED_BY_, LAST_MODIFIED_DATE_)
+        VALUES (#{id,jdbcType=BIGINT}, #{login,jdbcType=VARCHAR}, #{passwordHash,jdbcType=VARCHAR},
+          #{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+          #{activated,jdbcType=BIT}, #{langKey,jdbcType=VARCHAR}, #{activationKey,jdbcType=VARCHAR},
+          #{resetKey,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP},
+          #{resetDate,jdbcType=TIMESTAMP}, #{lastModifiedBy,jdbcType=VARCHAR}, #{lastModifiedDate,jdbcType=TIMESTAMP})
+    </insert>
+
+</mapper>

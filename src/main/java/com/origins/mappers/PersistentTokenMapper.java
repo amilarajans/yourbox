@@ -11,7 +11,6 @@
 package com.origins.mappers;
 
 import com.origins.domain.PersistentToken;
-import com.origins.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.time.LocalDate;
@@ -22,13 +21,13 @@ import java.util.List;
  */
 @Mapper
 public interface PersistentTokenMapper {
-    List<PersistentToken> findByUser(User user);
+    List<PersistentToken> findByUser(Long userId);
 
     List<PersistentToken> findByTokenDateBefore(LocalDate localDate);
 
-    void delete(PersistentToken token);
+    void deleteByTokenValue(String tokenValue);
 
-    void delete(String decodedSeries);
+    void deleteBySeries(String decodedSeries);
 
     void saveAndFlush(PersistentToken token);
 

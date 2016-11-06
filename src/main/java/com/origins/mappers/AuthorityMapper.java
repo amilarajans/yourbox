@@ -13,10 +13,14 @@ package com.origins.mappers;
 import com.origins.domain.Authority;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * Created by Amila-Kumara on 18/10/2016.
  */
 @Mapper
 public interface AuthorityMapper {
     Authority findOne(String role);
+
+    List<Authority> findAll();
 }

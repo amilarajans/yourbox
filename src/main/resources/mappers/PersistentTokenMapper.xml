@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.origins.mappers.PersistentTokenMapper">
+
+    <resultMap id="BaseResultMap" type="com.origins.domain.PersistentToken">
+        <id column="SERIES_" jdbcType="VARCHAR" property="series"/>
+        <result column="USER_ID_" jdbcType="BIGINT" property="userId"/>
+        <result column="TOKEN_VALUE_" jdbcType="VARCHAR" property="tokenValue"/>
+        <result column="TOKEN_DATE_" jdbcType="DATE" property="tokenDate"/>
+        <result column="IP_ADDRESS_" jdbcType="VARCHAR" property="ipAddress"/>
+        <result column="USER_AGENT_" jdbcType="VARCHAR" property="userAgent"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        SERIES_, USER_ID_, TOKEN_VALUE_, TOKEN_DATE_, IP_ADDRESS_, USER_AGENT_
+    </sql>
+
+    <select id="findOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ORI_PERSISTENT_TOKEN
+        WHERE SERIES_ = #{series,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findByUser" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ORI_PERSISTENT_TOKEN
+        WHERE USER_ID_ = #{userId,jdbcType=BIGINT}
+    </select>
+
+    <select id="findByTokenDateBefore" parameterType="java.time.LocalDate" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ORI_PERSISTENT_TOKEN
+        WHERE TOKEN_DATE_ = #{tokenDate,jdbcType=DATE}
+    </select>
+
+    <delete id="deleteByTokenValue" parameterType="java.lang.String">
+        DELETE FROM ORI_PERSISTENT_TOKEN
+        WHERE TOKEN_VALUE_ = #{tokenValue,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteBySeries" parameterType="java.lang.String">
+        DELETE FROM ORI_PERSISTENT_TOKEN
+        WHERE SERIES_ = #{series,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="saveAndFlush" parameterType="com.origins.domain.PersistentToken">
+        INSERT INTO ORI_PERSISTENT_TOKEN (SERIES_, USER_ID_, TOKEN_VALUE_,
+          TOKEN_DATE_, IP_ADDRESS_, USER_AGENT_)
+        VALUES (#{series,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{tokenValue,jdbcType=VARCHAR},
+          #{tokenDate,jdbcType=DATE}, #{ipAddress,jdbcType=VARCHAR}, #{userAgent,jdbcType=VARCHAR})
+    </insert>
+
+</mapper>

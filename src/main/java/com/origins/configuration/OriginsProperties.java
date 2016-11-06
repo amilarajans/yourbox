@@ -13,8 +13,6 @@ package com.origins.configuration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.cors.CorsConfiguration;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * Properties specific to Origins.
  * <p>
@@ -193,7 +191,7 @@ public class OriginsProperties {
 
         public static class RememberMe {
 
-            @NotNull
+            //            @NotNull
             private String key;
 
             public String getKey() {

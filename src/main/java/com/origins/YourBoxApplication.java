@@ -12,10 +12,15 @@ package com.origins;
 
 import com.origins.configuration.OriginsProperties;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration;
+import org.springframework.boot.actuate.autoconfigure.MetricRepositoryAutoConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.hazelcast.HazelcastAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
+@EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class, HazelcastAutoConfiguration.class})
 @EnableConfigurationProperties({OriginsProperties.class})
 public class YourBoxApplication {
 

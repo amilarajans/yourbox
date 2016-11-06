@@ -32,7 +32,9 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing users.
@@ -86,9 +88,7 @@ public class UserResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new user, or with status 400 (Bad Request) if the login or email is already in use
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/users",
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<?> createUser(@RequestBody ManagedUserDao managedUserVM, HttpServletRequest request) throws URISyntaxException {
@@ -126,9 +126,7 @@ public class UserResource {
      * or with status 400 (Bad Request) if the login or email is already in use,
      * or with status 500 (Internal Server Error) if the user couldn't be updated
      */
-    @RequestMapping(value = "/users",
-            method = RequestMethod.PUT,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<ManagedUserDao> updateUser(@RequestBody ManagedUserDao managedUserVM) {
@@ -153,21 +151,20 @@ public class UserResource {
     /**
      * GET  /users : get all users.
      *
-     * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and with body all users
      * @throws URISyntaxException if the pagination headers couldn't be generated
      */
-//    @RequestMapping(value = "/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    @Timed
-//    public ResponseEntity<List<ManagedUserDao>> getAllUsers(Pageable pageable)
-//        throws URISyntaxException {
-//        Page<User> page = userRepository.findAllWithAuthorities(pageable);
-//        List<ManagedUserDao> managedUserVMs = page.getContent().stream()
-//            .map(ManagedUserDao::new)
-//            .collect(Collectors.toList());
+    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<ManagedUserDao>> getAllUsers()
+            throws URISyntaxException {
+        List<User> page = userRepository.findAllWithAuthorities();
+        List<ManagedUserDao> managedUserVMs = page.stream()
+                .map(ManagedUserDao::new)
+                .collect(Collectors.toList());
 //        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
-//        return new ResponseEntity<>(managedUserVMs, headers, HttpStatus.OK);
-//    }
+        return new ResponseEntity<>(managedUserVMs, HttpStatus.OK);
+    }
 
     /**
      * GET  /users/:login : get the "login" user.
@@ -175,9 +172,7 @@ public class UserResource {
      * @param login the login of the user to find
      * @return the ResponseEntity with status 200 (OK) and with body the "login" user, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/users/{login:" + Constants.LOGIN_REGEX + "}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users/{login:" + Constants.LOGIN_REGEX + "}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<ManagedUserDao> getUser(@PathVariable String login) {
         log.debug("REST request to get User : {}", login);
@@ -193,9 +188,7 @@ public class UserResource {
      * @param login the login of the user to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/users/{login:" + Constants.LOGIN_REGEX + "}",
-            method = RequestMethod.DELETE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/users/{login:" + Constants.LOGIN_REGEX + "}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {

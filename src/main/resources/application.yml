@@ -68,3 +68,18 @@ origins:
             host: localhost
             port: 5000
             queueSize: 512
+#server:
+#    port: 8081
+#
+#logging:
+#    level:
+#        org:
+#            springframework:
+#                web: DEBUG
+#                boot:
+#                    spring-boot-autoconfigure: DEBUG
+#                    spring-boot-starter-actuator: DEBUG
+#            mybatis:
+#                spring:
+#                    boot:
+#                        mybatis-spring-boot-starter: DEBUG

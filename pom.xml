@@ -24,11 +24,13 @@
 
         <java.version>1.8</java.version>
 
+        <!--project dependencies-->
         <metrics.version>3.0.2</metrics.version>
         <spring.metrics.version>3.1.3</spring.metrics.version>
         <mybatis.hazelcast.version>1.1.0</mybatis.hazelcast.version>
         <mybatis.sprin.boot.version>1.1.1</mybatis.sprin.boot.version>
         <hazelcast.version>3.7.2</hazelcast.version>
+        <hazelcast.wm.version>3.6.5</hazelcast.wm.version>
         <javax.inject.version>1</javax.inject.version>
         <commons-io.version>2.5</commons-io.version>
         <commons-lang.version>3.4</commons-lang.version>
@@ -53,7 +55,15 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-data</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.session</groupId>
@@ -62,6 +72,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-validator</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -71,12 +87,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
-            <!--<exclusions>-->
-            <!--<exclusion>-->
-            <!--<groupId>ch.qos.logback</groupId>-->
-            <!--<artifactId>logback-classic</artifactId>-->
-            <!--</exclusion>-->
-            <!--</exclusions>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -97,22 +107,18 @@
             <scope>test</scope>
         </dependency>
 
-        <!--mybatis caches-->
+        <!-- mybatis -->
+        <!--jdk8 date time support-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-typehandlers-jsr310</artifactId>
+            <version>1.0.1</version>
+        </dependency>
         <dependency>
             <groupId>org.mybatis.caches</groupId>
             <artifactId>mybatis-hazelcast</artifactId>
             <version>${mybatis.hazelcast.version}</version>
         </dependency>
-
-        <!--logging dependency-->
-        <!--<dependency>-->
-        <!--<groupId>org.slf4j</groupId>-->
-        <!--<artifactId>slf4j-api</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.slf4j</groupId>-->
-        <!--<artifactId>slf4j-simple</artifactId>-->
-        <!--</dependency>-->
 
         <!--jackson dependency-->
         <dependency>
@@ -148,6 +154,11 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-wm</artifactId>
+            <version>${hazelcast.wm.version}</version>
         </dependency>
 
         <!--pooling dependency-->
@@ -198,12 +209,14 @@
             <version>${spring.metrics.version}</version>
         </dependency>
 
+        <!--JSR-330 DI support-->
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>${javax.inject.version}</version>
         </dependency>
 
+        <!--common tools-->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>

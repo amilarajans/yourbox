@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.origins.mappers.AuthorityMapper">
+
+    <resultMap id="BaseResultMap" type="com.origins.domain.Authority">
+        <result column="NAME_" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+
+    <select id="findOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT NAME_ FROM ORI_AUTHORITY
+        WHERE NAME_ = #{name,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT NAME_ FROM ORI_AUTHORITY
+    </select>
+
+</mapper>
